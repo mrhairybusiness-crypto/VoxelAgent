@@ -3,6 +3,7 @@
 #include "raygui.h"
 #include "rlgl.h"
 #include "raymath.h"
+#include "rcamera.h"
 
 Rectangle CreateRectangle(float Width, float  Height, float PositionX, float PositionY) {
     Rectangle rect = { PositionX, PositionY, Width, Height };
