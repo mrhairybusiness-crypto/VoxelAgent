@@ -2,6 +2,7 @@
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 #include "rlgl.h"
+#include "raymath.h"
 
 Rectangle CreateRectangle(float Width, float  Height, float PositionX, float PositionY) {
     Rectangle rect = { PositionX, PositionY, Width, Height };
