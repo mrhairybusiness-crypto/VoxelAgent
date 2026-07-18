@@ -13,3 +13,5 @@
 We coded this project in C++ (CPP);
 
 The owner (Me) codes a lot of trash projects, he has ADHD.
+
+- Date: Saturday, 18 July 2026, Fix: Fixed a problem that didn't let you begin drawing in 3d. Camera didn't return itself.
