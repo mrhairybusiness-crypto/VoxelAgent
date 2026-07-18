@@ -59,13 +59,15 @@ void DrawNewText(const char* Text, float PositionX, float PositionY, float Text_
 
 // 3D
 
-void CreateACamera(float PositionX, float PositionY, float PositionZ, float RotationX, float RotationY, float RotationZ, float Field_Of_View_Or_FOV) {
+Camera3D CreateACamera(float PositionX, float PositionY, float PositionZ, float RotationX, float RotationY, float RotationZ, float Field_Of_View_Or_FOV) {
     Camera3D cam = { 0 };
     cam.position = (Vector3){PositionX, PositionY, PositionZ};
     cam.target = (Vector3){RotationX, RotationY, RotationZ};
     cam.up = (Vector3){0.0f, 1.0f, 0.0f};
     cam.fovy = Field_Of_View_Or_FOV;
     cam.projection = CAMERA_PERSPECTIVE;
+
+    return cam;
 }
 
 void StartDrawingIn3D(Camera3D CameraFromCreateACamera) {
