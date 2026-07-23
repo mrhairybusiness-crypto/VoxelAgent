@@ -4,6 +4,7 @@
 #include "rlgl.h"
 #include "raymath.h"
 #include "rcamera.h"
+#include "rgestures.h"
 
 Rectangle CreateRectangle(float Width, float  Height, float PositionX, float PositionY) {
     Rectangle rect = { PositionX, PositionY, Width, Height };
