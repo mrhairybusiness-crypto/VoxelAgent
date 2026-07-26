@@ -94,3 +94,19 @@ void Draw3DCube(float PositionX, float PositionY, float PositionZ, float Rotatio
 void Draw3DSphere(float PositionX, float PositionY, float PositionZ, float Radius, Color RGB_Color) {
     DrawSphere((Vector3){PositionX, PositionY, PositionZ}, Radius, RGB_Color);
 }
+
+void FixPixelation() {
+    SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_WINDOW_HIGHDPI); 
+    RenderTexture2D target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
+    SetTextureFilter(target.texture, TEXTURE_FILTER_BILINEAR);
+}
+
+void FixTextPixelation(customFont) {
+    SetTextureFilter(customFont.texture, TEXTURE_FILTER_BILINEAR);
+
+    // 3. Force raygui to use this high-resolution font
+    GuiSetFont(customFont);
+
+    // 4. Match the raygui element text size to scale properly 
+    GuiSetStyle(DEFAULT, TEXT_SIZE, 24); 
+}
