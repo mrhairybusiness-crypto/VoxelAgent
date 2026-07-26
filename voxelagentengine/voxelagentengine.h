@@ -6,6 +6,8 @@
 #include "rcamera.h"
 #include "rgestures.h"
 
+#define LineConnectedShape = RL_TRIANGLES;
+
 Rectangle CreateRectangle(float Width, float  Height, float PositionX, float PositionY) {
     Rectangle rect = { PositionX, PositionY, Width, Height };
     return rect;
@@ -95,13 +97,11 @@ void Draw3DSphere(float PositionX, float PositionY, float PositionZ, float Radiu
     DrawSphere((Vector3){PositionX, PositionY, PositionZ}, Radius, RGB_Color);
 }
 
-void FixPixelation() {
+void FixPixelationForFlags() {
     SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_WINDOW_HIGHDPI); 
-    RenderTexture2D target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
-    SetTextureFilter(target.texture, TEXTURE_FILTER_BILINEAR);
 }
 
-void FixTextPixelation(customFont) {
+void FixTextPixelation(Font customFont) {
     SetTextureFilter(customFont.texture, TEXTURE_FILTER_BILINEAR);
 
     // 3. Force raygui to use this high-resolution font
@@ -109,4 +109,48 @@ void FixTextPixelation(customFont) {
 
     // 4. Match the raygui element text size to scale properly 
     GuiSetStyle(DEFAULT, TEXT_SIZE, 24); 
+}
+
+void FixRenderPixelation() {
+    RenderTexture2D target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
+    SetTextureFilter(target.texture, TEXTURE_FILTER_BILINEAR);
+}
+
+void BeginGLShaping() {
+    rlBegin(RL_TRIANGLES);
+}
+void SetVertexColorGL(float Red, float Green, float Blue, float Alpha) {
+    rlColor4ub(Red, Green, Blue, Alpha);
+}
+
+void DrawPointsGL(float X, float Y) {
+    rlVertex2f(X, Y);
+}
+
+void StopShapingInGL() {
+    rlEnd();
+}
+
+Rectangle ActivateCollisionBox(Rectangle PresumedCollidingRectangle, Rectangle B) {
+    if (CheckCollisionRecs(PresumedCollidingRectangle, B)) {
+        Rectangle Overlap = GetCollisionRec(PresumedCollidingRectangle, B);
+        Rectangle* BC = &PresumedCollidingRectangle;
+        if (Overlap.width < Overlap.height) {
+            if (BC->x < B.x) {
+                BC->x -= Overlap.width;
+                return *BC;
+            } else {
+                BC->x += Overlap.width;
+                return *BC;
+            }
+        } else {
+            if (BC->y < B.y) {
+                BC->y -= Overlap.height;
+                return *BC;
+            } else {
+                BC->y += Overlap.height;
+                return *BC;
+            }
+        }
+    }
 }
