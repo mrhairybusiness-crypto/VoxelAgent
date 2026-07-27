@@ -39,6 +39,7 @@ void SetBackgroundColor(Color RGB_Color) {
 }
 
 void CreateWindow(float Width, float Height, const char* title_text) {
+    ChangeDirectory(GetApplicationDirectory());
     InitWindow(Width, Height, title_text);
 };
 
